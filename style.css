@@ -1,0 +1,86 @@
+:root {
+    --bs-blue: #2196f3;
+    --bs-yellow: #ffeb3b;
+    --bs-red: #f44336;
+    --bs-dark: #1a1a1a;
+    --bs-border: #000;
+}
+
+body {
+    background: var(--bs-dark);
+    color: white;
+    font-family: 'Lilita One', cursive;
+    margin: 0;
+    overflow: hidden;
+}
+
+.screen {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.hidden { display: none !important; }
+
+/* Карточки */
+.card {
+    background: var(--bs-blue);
+    padding: 30px;
+    border: 6px solid var(--bs-border);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.3);
+}
+
+input {
+    padding: 12px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: 4px solid #000;
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.btn-main, .btn-start {
+    background: var(--bs-yellow);
+    padding: 10px 25px;
+    border: 4px solid #000;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Лобби */
+#lobby-screen {
+    justify-content: flex-start;
+}
+
+.sidebar {
+    width: 300px;
+    background: rgba(0,0,0,0.6);
+    height: 100%;
+    padding: 20px;
+    border-right: 4px solid var(--bs-blue);
+}
+
+.player-item {
+    background: #444;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kick-btn {
+    background: var(--bs-red);
+    color: white;
+    border: 2px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admin-badge { color: var(--bs-yellow); font-size: 0.8rem; margin-top: 20px;}
