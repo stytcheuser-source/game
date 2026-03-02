@@ -19,30 +19,30 @@
                     <button onclick="Game.showJoinInput()" class="bs-btn yellow">ВОЙТИ</button>
                 </div>
                 <div id="join-area" class="hidden">
-                    <input type="text" id="room-input" placeholder="ID КОМНАТЫ">
-                    <button onclick="Game.initJoin()" class="bs-btn green">ПОДКЛЮЧИТЬСЯ</button>
+                    <input type="text" id="room-input" placeholder="КОД КОМНАТЫ">
+                    <button onclick="Game.initJoin()" class="bs-btn green">GO</button>
                 </div>
             </div>
         </div>
 
         <div id="lobby-screen" class="screen hidden">
             <div class="sidebar">
-                <div class="sidebar-header">ИГРОКИ: <span id="p-count">0</span></div>
+                <div class="sidebar-header">КЛУБ: <span id="p-count">0</span></div>
                 <div id="player-list"></div>
             </div>
             <div class="content">
-                <div class="room-info">ID КОМНАТЫ: <b id="display-room-id">...</b></div>
+                <div class="room-info">КОД: <b id="display-room-id">...</b></div>
                 
                 <div id="host-controls" class="hidden">
-                    <button onclick="Game.startRound()" class="bs-btn green large">НАЧАТЬ ИГРУ</button>
+                    <button id="start-btn" onclick="Game.startRound()" class="bs-btn green large">ИГРАТЬ</button>
+                    <button id="restart-btn" onclick="Game.resetGame()" class="bs-btn blue hidden">НОВЫЙ РАУНД</button>
                 </div>
 
                 <div id="game-reveal" class="hidden">
                     <div class="reveal-card" id="card-box">
                         <h2 id="role-title">ТВОЯ РОЛЬ</h2>
                         <h1 id="brawler-name">???</h1>
-                        <p id="instruction">Обсуждайте и найдите шпиона!</p>
-                        <button onclick="location.reload()" class="bs-btn small">ВЫЙТИ</button>
+                        <p id="instruction">Кто-то здесь Леон под инвизом...</p>
                     </div>
                 </div>
             </div>
