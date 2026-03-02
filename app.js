@@ -1,110 +1,88 @@
-const BRAWLERS = ["LEON", "SPIKE", "CROW", "MORTIS", "SHELLY", "COLT", "EL PRIMO", "POCO", "SURGE", "EDGAR", "TARA", "AMBER", "PIPER"];
+const BRAWLERS = ["LEON", "SPIKE", "CROW", "MORTIS", "SHELLY", "COLT", "EL PRIMO", "POCO", "SURGE", "EDGAR", "TARA"];
 
 const Game = {
     peer: null,
+    connections: [], 
+    conn: null,      
     myNick: "",
     isHost: false,
-    players: [], // Массив объектов {nick, conn}
+    players: [], // {nick, conn}
 
     showJoinInput() {
         document.getElementById('join-area').classList.toggle('hidden');
     },
 
-    // ХОСТ: Создание лобби
+    // Создание комнаты (Хост)
     initHost() {
-        this.myNick = document.getElementById('nick-input').value.toUpperCase() || "PLAYER";
+        this.myNick = document.getElementById('nick-input').value.toUpperCase() || "ИГРОК";
         this.isHost = true;
-        const randomID = Math.floor(1000 + Math.random() * 8999).toString(); 
+        const randomID = Math.floor(1000 + Math.random() * 9000).toString(); // 4-значный ID
         
         this.peer = new Peer('bs-' + randomID);
-
         this.peer.on('open', (id) => {
             document.getElementById('display-room-id').innerText = id.replace('bs-', '');
-            this.players.push({ nick: this.myNick, conn: null }); // Хост без коннекта к себе
+            this.players.push({ nick: this.myNick, conn: null });
             this.showLobby();
         });
 
-        this.peer.on('connection', (conn) => {
-            conn.on('open', () => {
-                conn.on('data', (data) => this.handleData(data, conn));
+        this.peer.on('connection', (c) => {
+            c.on('open', () => {
+                c.on('data', (data) => this.handleData(data, c));
             });
-        });
-
-        this.peer.on('error', (err) => {
-            alert("Ошибка сети! Попробуй другой ник или создай заново.");
-            location.reload();
         });
     },
 
-    // КЛИЕНТ: Подключение
+    // Вход в комнату (Клиент)
     initJoin() {
-        this.myNick = document.getElementById('nick-input').value.toUpperCase() || "PLAYER";
-        const roomID = document.getElementById('room-input').value.trim();
+        this.myNick = document.getElementById('nick-input').value.toUpperCase() || "ИГРОК";
+        const roomID = document.getElementById('room-input').value;
         this.isHost = false;
 
         this.peer = new Peer();
         this.peer.on('open', () => {
-            const conn = this.peer.connect('bs-' + roomID);
-            conn.on('open', () => {
-                this.players.push({ nick: "HOST", conn: conn }); // Клиент знает только хоста
-                conn.send({ type: 'JOIN', nick: this.myNick });
+            this.conn = this.peer.connect('bs-' + roomID);
+            this.conn.on('open', () => {
+                this.conn.send({ type: 'JOIN', nick: this.myNick });
                 this.showLobby();
                 document.getElementById('display-room-id').innerText = roomID;
             });
-            conn.on('data', (data) => this.handleData(data));
+            this.conn.on('data', (data) => this.handleData(data));
         });
     },
 
-    handleData(data, conn) {
-        // Хост получает данные от игроков
-        if (data.type === 'JOIN' && this.isHost) {
-            this.players.push({ nick: data.nick, conn: conn });
+    handleData(data, c) {
+        if (data.type === 'JOIN') {
+            this.players.push({ nick: data.nick, conn: c });
             this.broadcast({ type: 'LIST', list: this.players.map(p => p.nick) });
         }
-        
-        // Все получают список игроков
         if (data.type === 'LIST') this.renderList(data.list);
         
-        // Получение роли
         if (data.type === 'ROLE') {
             this.showRole(data.role, data.brawler);
         }
-
-        // Рестарт раунда
-        if (data.type === 'RESET') {
-            document.getElementById('game-reveal').classList.add('hidden');
-        }
     },
 
+    // Главная логика распределения
     startRound() {
         if (!this.isHost) return;
+
         const secretBrawler = BRAWLERS[Math.floor(Math.random() * BRAWLERS.length)];
         const spyIndex = Math.floor(Math.random() * this.players.length);
 
         this.players.forEach((p, index) => {
             const isSpy = (index === spyIndex);
-            const rolePayload = {
+            const message = {
                 type: 'ROLE',
                 role: isSpy ? 'ШПИОН' : 'БОЕЦ',
                 brawler: isSpy ? '???' : secretBrawler
             };
 
             if (p.nick === this.myNick) {
-                this.showRole(rolePayload.role, rolePayload.brawler);
+                this.showRole(message.role, message.brawler);
             } else {
-                p.conn.send(rolePayload);
+                p.conn.send(message);
             }
         });
-
-        document.getElementById('start-btn').classList.add('hidden');
-        document.getElementById('restart-btn').classList.remove('hidden');
-    },
-
-    resetGame() {
-        this.broadcast({ type: 'RESET' });
-        document.getElementById('game-reveal').classList.add('hidden');
-        document.getElementById('restart-btn').classList.add('hidden');
-        document.getElementById('start-btn').classList.remove('hidden');
     },
 
     showRole(role, brawler) {
@@ -114,8 +92,14 @@ const Game = {
         
         nameText.innerText = brawler;
         document.getElementById('role-title').innerText = "ТВОЯ РОЛЬ: " + role;
-        card.style.background = (role === 'ШПИОН') ? "#f44336" : "#ffeb3b";
-        nameText.style.color = (role === 'ШПИОН') ? "#fff" : "#000";
+
+        if (role === 'ШПИОН') {
+            card.style.background = "#f44336"; // Красный для шпиона
+            nameText.style.color = "white";
+        } else {
+            card.style.background = "#ffeb3b"; // Желтый для бойцов
+            nameText.style.color = "#000";
+        }
     },
 
     broadcast(data) {
