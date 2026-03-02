@@ -10,65 +10,19 @@
         :root { --blue: #2196f3; --yellow: #ffeb3b; --red: #f44336; --dark: #121212; }
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Lilita One', cursive; color: white; text-transform: uppercase; background: var(--dark); }
         
-        /* Фон с частицами - магия антигравитации ✨ */
         #particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         
         #app { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 100vh; }
         .screen { display: flex; flex-direction: column; width: 100%; max-width: 800px; padding: 20px; box-sizing: border-box; }
         .hidden { display: none !important; }
         
-        /* Карточки и UI в стиле Brawl Stars 🏆🔑 */
-        .card { 
-            background: rgba(33, 150, 243, 0.9); 
-            padding: 30px; 
-            border: 6px solid #000; 
-            border-radius: 20px; 
-            text-align: center; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
-            backdrop-filter: blur(5px); 
-            margin: 0 auto; 
-            width: 100%; 
-            max-width: 400px; 
-            position: relative; /* Для радужного блика ✨ */
-        }
-        
-        /* Радужный блик на карточке ✨ */
-        .card::after {
-            content: '';
-            position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-            border-radius: 25px;
-            z-index: -1;
-            opacity: 0.3;
-            filter: blur(15px);
-        }
+        .card { background: rgba(33, 150, 243, 0.9); padding: 30px; border: 6px solid #000; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); backdrop-filter: blur(5px); margin: 0 auto; width: 100%; max-width: 400px; position: relative; }
+        .card::after { content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); border-radius: 25px; z-index: -1; opacity: 0.3; filter: blur(15px); }
         
         input { padding: 12px; font-size: 1.2rem; border-radius: 8px; border: 4px solid #000; margin-bottom: 10px; width: 80%; font-family: inherit; text-align: center; }
         
-        .btn { 
-            padding: 12px 20px; 
-            font-size: 1.2rem; 
-            border: 4px solid #000; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-family: inherit; 
-            transition: transform 0.1s, box-shadow 0.1s; 
-            display: inline-block; 
-            margin: 5px; 
-            position: relative; /* Для блика ✨ */
-            overflow: hidden;
-        }
-        
-        /* Радужный блик на кнопках ✨ */
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(45deg);
-            transition: transform 0.5s;
-        }
+        .btn { padding: 12px 20px; font-size: 1.2rem; border: 4px solid #000; border-radius: 10px; cursor: pointer; font-family: inherit; transition: transform 0.1s, box-shadow 0.1s; display: inline-block; margin: 5px; position: relative; overflow: hidden; }
+        .btn::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent); transform: rotate(45deg); transition: transform 0.5s; }
         .btn:hover::after { transform: rotate(45deg) translate(50%, 50%); }
 
         .btn.yellow { background: var(--yellow); color: #000; }
@@ -76,13 +30,17 @@
         .btn.red { background: var(--red); color: #fff; width: 100%; margin-top: 15px; }
         .btn:active { transform: scale(0.95); box-shadow: inset 0 3px 5px rgba(0,0,0,0.3); }
 
-        /* Лобби 👥 */
+        /* Лобби и список игроков */
         #lobby-layout { display: flex; gap: 20px; width: 100%; max-width: 800px; margin: 0 auto; }
         .sidebar { background: rgba(0,0,0,0.8); border: 4px solid var(--blue); border-radius: 15px; width: 250px; padding: 15px; }
-        .player-item { background: #222; border: 2px solid #444; margin: 5px 0; padding: 10px; border-radius: 8px; font-size: 1.1rem;}
+        
+        /* Стили для элемента игрока с кнопкой Кика */
+        .player-item { background: #222; border: 2px solid #444; margin: 5px 0; padding: 10px; border-radius: 8px; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center; }
+        .kick-btn { background: var(--red); color: white; border: 2px solid #000; border-radius: 5px; cursor: pointer; padding: 2px 8px; font-family: inherit; font-size: 1rem; transition: 0.2s; }
+        .kick-btn:hover { background: #d32f2f; transform: scale(1.1); }
+        
         .content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
         
-        /* Карточка роли 👀🚀 */
         .role-card { background: #ff9800; border: 6px solid #fff; padding: 30px; border-radius: 20px; text-align: center; width: 100%; box-sizing: border-box; transition: background-color 0.3s; }
         .spy-mode { background: var(--red); }
         .brawler-name { font-size: 3.5rem; margin: 10px 0; -webkit-text-stroke: 2px black; text-shadow: 2px 2px 0 #000; }
@@ -121,9 +79,9 @@
                 </div>
                 <div class="content">
                     <div class="card" style="margin-bottom: 20px; max-width: 100%;">
-                        <h2>КОД КОМНАТЫ 🔑: <span id="display-room-id" style="color: var(--yellow);">...</span></h2>
+                        <h2>КОД 🔑: <span id="display-room-id" style="color: var(--yellow);">...</span></h2>
                         <div id="host-controls" class="hidden">
-                            <button id="start-btn" onclick="Game.startRound()" class="btn green" style="width: 100%;">НАЧАТЬ 🏁🚀</button>
+                            <button id="start-btn" onclick="Game.startRound()" class="btn green" style="width: 100%;">НАЧАТЬ 🏁</button>
                             <button id="restart-btn" onclick="Game.resetRound()" class="btn yellow hidden" style="width: 100%;">НОВЫЙ РАУНД 🔄</button>
                         </div>
                     </div>
@@ -139,6 +97,14 @@
                 </div>
             </div>
         </div>
+
+        <div id="kicked-screen" class="screen hidden">
+            <div class="card">
+                <h1 style="color: var(--yellow)">ВЫБЫЛ 🥾</h1>
+                <p>Хост исключил тебя из этой операции.</p>
+                <button onclick="location.reload()" class="btn green">НА ГЛАВНУЮ 🏠</button>
+            </div>
+        </div>
     </div>
 
 <script>
@@ -146,9 +112,8 @@
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
-let mouse = { x: null, y: null, radius: 150 }; // Радиус притяжения🧲
+let mouse = { x: null, y: null, radius: 150 };
 
-// Отслеживаем мышь🐭 и касания👆
 window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
 window.addEventListener('touchmove', (e) => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; });
 window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
@@ -161,29 +126,26 @@ class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 0.5; // Частицы мельче
-        // Радужные цвета🌈 через hsl()
+        this.size = Math.random() * 3 + 0.5;
         this.color = `hsl(${Math.random() * 360}, 100%, 60%)`; 
-        this.baseX = this.x; // Начальная позиция⚓
+        this.baseX = this.x;
         this.baseY = this.y;
-        this.density = (Math.random() * 20) + 1; // "Плотность" для разной скорости притяжения🚀
+        this.density = (Math.random() * 20) + 1;
     }
     update() {
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Притяжение🧲 к курсору
         if (mouse.x != null && distance < mouse.radius) {
             let forceDirectionX = dx / distance;
             let forceDirectionY = dy / distance;
-            let force = (mouse.radius - distance) / mouse.radius; // Сила зависит от расстояния📏
+            let force = (mouse.radius - distance) / mouse.radius;
             let directionX = forceDirectionX * force * this.density;
             let directionY = forceDirectionY * force * this.density;
             this.x += directionX;
             this.y += directionY;
         } else {
-            // Плавный возврат⚓ на свои места
             if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 20;
             if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 20;
         }
@@ -198,175 +160,208 @@ class Particle {
 
 function initParticles() {
     particlesArray = [];
-    // Количество частиц зависит от размера экрана💻📱
     let numberOfParticles = (canvas.width * canvas.height) / 2000; 
     for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
 }
 
 function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем canvas🖌️
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
         particlesArray[i].draw();
     }
-    requestAnimationFrame(animateParticles); // Запускаем следующий кадр🎞️
+    requestAnimationFrame(animateParticles);
 }
-resizeCanvas(); animateParticles(); // Инициализация🏁 и запуск анимации🎬
+resizeCanvas(); animateParticles();
 
-// --- Игровая логика P2P 👥💬👀 ---
-const BRAWLERS = ["LEON 🦎", "SPIKE 🌵", "CROW 🦅", "MORTIS 🦇", "SHELLY 🔫", "COLT 🤠", "EL PRIMO 💪", "EDGAR 🧣", "SURGE 🤖", "AMBER 🔥"];
+// --- Игровая логика P2P ---
+// Значительно расширен список бравлеров 🦸‍♂️
+const BRAWLERS = [
+    "LEON 🦎", "SPIKE 🌵", "CROW 🦅", "MORTIS 🦇", "SHELLY 🔫", "COLT 🤠", 
+    "EL PRIMO 💪", "EDGAR 🧣", "SURGE 🤖", "AMBER 🔥", "GALE ❄️", "COLETTE 📘", 
+    "BULL 🐂", "JESSIE 🛠️", "DYNAMIKE 🧨", "BO 🦅", "TICK 💣", "8-BIT 🕹️", 
+    "EMZ 📱", "STU 🏍️", "PIPER ☂️", "PAM 🔧", "FRANK 🧟", "BIBI ⚾", 
+    "BEA 🐝", "NANI 🤖", "MAX ⚡", "MR. P 🐧", "SPROUT 🌱", "BYRON 🐍", "TARA 👁️"
+];
 
 const Game = {
     peer: null,
     myNick: "",
     isHost: false,
-    players: [], // Массив объектов {nick: "Имя", conn: PeerConnection (null для хоста)}
+    players: [], 
 
-    // ХОСТ💻: Создание комнаты 🚀
     createRoom() {
         this.myNick = document.getElementById('nick-input').value.trim().toUpperCase() || "HOST 💻";
         this.isHost = true;
-        const roomId = Math.floor(1000 + Math.random() * 9000).toString(); // Генерируем 4-значный код🔑
+        // Генерация случайного уникального кода каждый раз
+        const roomId = Math.floor(1000 + Math.random() * 9000).toString(); 
         
-        // Создаем Peer с уникальным ID (brawl-XXXX) 🔑
         this.peer = new Peer('brawl-' + roomId);
         
         this.peer.on('open', (id) => {
             document.getElementById('display-room-id').innerText = roomId;
-            // Хост💻 ВСЕГДА первый в списке (индекс 0)
             this.players = [{ nick: this.myNick, conn: null }]; 
             this.updateUI();
             this.showLobby();
         });
 
-        // Слушаем входящие подключения🔌 (как центральный хост💻 в P2P схеме)
         this.peer.on('connection', (conn) => {
             conn.on('data', (data) => {
                 if (data.type === 'JOIN') {
-                    // Добавляем игрока👥 в список
-                    this.players.push({ nick: data.nick, conn: conn });
-                    this.broadcastList(); // Рассылаем обновленный список всем📢
+                    // Убедимся, что ники не дублируются точь-в-точь (добавляем цифру если что)
+                    let finalNick = data.nick;
+                    if (this.players.find(p => p.nick === finalNick)) {
+                        finalNick += Math.floor(Math.random() * 100);
+                    }
+                    this.players.push({ nick: finalNick, conn: conn });
+                    this.broadcastList();
                 }
             });
-            // Обработка отключения🔌 игрока👥
             conn.on('close', () => {
                 this.players = this.players.filter(p => p.conn !== conn);
-                this.broadcastList(); // Рассылаем обновленный список всем📢
+                this.broadcastList();
             });
         });
     },
 
-    // ИГРОК👥: Подключение🚪
     joinRoom() {
         this.myNick = document.getElementById('nick-input').value.trim().toUpperCase() || "PLAYER 👥";
         const roomId = document.getElementById('room-input').value.trim();
+        if(!roomId) return alert("Введите код комнаты!");
+        
         this.isHost = false;
-
-        this.peer = new Peer(); // Создаем Peer без фиксированного ID🔑
+        this.peer = new Peer(); 
         this.peer.on('open', () => {
-            // Подключаемся🔌 к хосту💻 по его ID (brawl-XXXX) 🔑
             const conn = this.peer.connect('brawl-' + roomId);
+            
             conn.on('open', () => {
-                conn.send({ type: 'JOIN', nick: this.myNick }); // Отправляем запрос на вход🚪
+                conn.send({ type: 'JOIN', nick: this.myNick });
                 document.getElementById('display-room-id').innerText = roomId;
                 this.showLobby();
             });
-            // Слушаем данные от хоста💻 (как клиент в P2P схеме)
+            
             conn.on('data', (data) => {
                 if (data.type === 'LIST') {
-                    // Обновляем локальный список игроков👥
                     this.players = data.list.map(n => ({ nick: n }));
                     this.updateUI();
                 }
-                if (data.type === 'ROLE') this.displayRole(data.role, data.brawler); // Показываем роль👀🃏
-                if (data.type === 'RESET') document.getElementById('game-reveal').classList.add('hidden'); // Скрываем роль🙈🔄
+                if (data.type === 'ROLE') this.displayRole(data.role, data.brawler);
+                if (data.type === 'RESET') document.getElementById('game-reveal').classList.add('hidden');
+                
+                // Обработка кика от хоста 🥾
+                if (data.type === 'KICK') {
+                    this.showKickedScreen();
+                }
             });
         });
     },
 
-    // ХОСТ💻📢: Рассылка списка игроков👥
     broadcastList() {
         if (!this.isHost) return;
         const names = this.players.map(p => p.nick);
-        // Отправляем список всем подключенным игрокам👥🔌
         this.players.forEach(p => { if (p.conn) p.conn.send({ type: 'LIST', list: names }); });
-        this.updateUI(); // Обновляем свой UI💻
+        this.updateUI();
     },
 
-    // ХОСТ💻🚀🏁: Старт раунда и распределение ролей 👀🃏
     startRound() {
-        // Проверки перед стартом🏁🚀
         if (!this.isHost || this.players.length < 2) return alert("Нужно минимум 2 игрока! 👥❌");
         
-        const brawler = BRAWLERS[Math.floor(Math.random() * BRAWLERS.length)]; // Выбираем бравлера🃏
-        // Алгоритм строго выбирает ОДНОГО шпиона👀🃏
+        const brawler = BRAWLERS[Math.floor(Math.random() * BRAWLERS.length)];
         const spyIndex = Math.floor(Math.random() * this.players.length); 
 
         this.players.forEach((p, index) => {
-            const isSpy = (index === spyIndex); // Проверка на шпиона👀🃏
+            const isSpy = (index === spyIndex);
             const rolePayload = {
                 type: 'ROLE',
                 role: isSpy ? 'ШПИОН 👀' : 'БОЕЦ 👥',
-                brawler: isSpy ? '??? 🃏' : brawler // Шпион👀 не знает бравлера🃏
+                brawler: isSpy ? '??? 🃏' : brawler 
             };
 
             if (p.conn === null) {
-                this.displayRole(rolePayload.role, rolePayload.brawler); // Показываем хосту💻
+                this.displayRole(rolePayload.role, rolePayload.brawler);
             } else {
-                p.conn.send(rolePayload); // Отправляем клиенту👥🔌
+                p.conn.send(rolePayload);
             }
         });
 
-        // Переключаем кнопки управления
         document.getElementById('start-btn').classList.add('hidden');
         document.getElementById('restart-btn').classList.remove('hidden');
     },
 
-    // ХОСТ💻🔄📢: Сброс раунда
     resetRound() {
         if (!this.isHost) return;
-        // Отправляем команду сброса всем
         this.players.forEach(p => { if (p.conn) p.conn.send({ type: 'RESET' }); });
-        document.getElementById('game-reveal').classList.add('hidden'); // Скрываем у себя🙈
-        // Переключаем кнопки управления
+        document.getElementById('game-reveal').classList.add('hidden');
         document.getElementById('restart-btn').classList.add('hidden');
         document.getElementById('start-btn').classList.remove('hidden');
     },
 
-    // Отображение роли 👀🃏
+    // Функция изгнания игрока (работает только у хоста) 🥾
+    kickPlayer(nick) {
+        if (!this.isHost) return;
+        
+        const playerIndex = this.players.findIndex(p => p.nick === nick);
+        if (playerIndex > 0) { // Не позволяем хосту кикнуть самого себя (индекс 0)
+            const playerToKick = this.players[playerIndex];
+            
+            // Отправляем сигнал о кике
+            if (playerToKick.conn) {
+                playerToKick.conn.send({ type: 'KICK' });
+                // Даем миллисекунды на отправку сообщения перед закрытием канала
+                setTimeout(() => playerToKick.conn.close(), 200);
+            }
+            
+            // Удаляем из локального массива и обновляем всем списки
+            this.players.splice(playerIndex, 1);
+            this.broadcastList();
+        }
+    },
+
     displayRole(role, target) {
         const reveal = document.getElementById('game-reveal');
         const cardBg = document.getElementById('role-card-bg');
         
-        reveal.classList.remove('hidden'); // Показываем блок
+        reveal.classList.remove('hidden');
         document.getElementById('role-title').innerText = "ТВОЯ РОЛЬ 👀: " + role;
         document.getElementById('brawler-name').innerText = target;
         
-        // Визуальное отличие для шпиона👀🃏
         if (role === 'ШПИОН 👀') {
-            cardBg.classList.add('spy-mode'); // Красный фон🔴
+            cardBg.classList.add('spy-mode');
         } else {
-            cardBg.classList.remove('spy-mode'); // Оранжевый фон🟠
+            cardBg.classList.remove('spy-mode');
         }
     },
 
-    // Скрыть роль локально 🙈🃏
     hideRoleLocally() {
         document.getElementById('game-reveal').classList.add('hidden');
     },
 
-    // Обновление списка игроков👥 в UI
     updateUI() {
         const list = document.getElementById('player-list');
-        list.innerHTML = this.players.map(p => `<div class="player-item">${p.nick}</div>`).join('');
+        list.innerHTML = this.players.map((p, index) => {
+            // Кнопка кика появляется только если ты хост и это не твой собственный ник (ты всегда под индексом 0)
+            const kickHtml = (this.isHost && index !== 0) 
+                ? `<button class="kick-btn" onclick="Game.kickPlayer('${p.nick}')">X</button>` 
+                : '';
+                
+            return `<div class="player-item">
+                        <span>${p.nick}</span>
+                        ${kickHtml}
+                    </div>`;
+        }).join('');
         document.getElementById('p-count').innerText = this.players.length;
     },
 
-    // Показать экран лобби 👥💬🔑
     showLobby() {
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('lobby-screen').classList.remove('hidden');
         if (this.isHost) document.getElementById('host-controls').classList.remove('hidden');
+    },
+    
+    showKickedScreen() {
+        document.getElementById('lobby-screen').classList.add('hidden');
+        document.getElementById('kicked-screen').classList.remove('hidden');
+        if (this.peer) this.peer.destroy(); // Отключаемся от P2P сети
     }
 };
 </script>
