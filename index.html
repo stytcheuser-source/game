@@ -30,11 +30,9 @@
         .btn.red { background: var(--red); color: #fff; width: 100%; margin-top: 15px; }
         .btn:active { transform: scale(0.95); box-shadow: inset 0 3px 5px rgba(0,0,0,0.3); }
 
-        /* Лобби и список игроков */
         #lobby-layout { display: flex; gap: 20px; width: 100%; max-width: 800px; margin: 0 auto; }
         .sidebar { background: rgba(0,0,0,0.8); border: 4px solid var(--blue); border-radius: 15px; width: 250px; padding: 15px; }
         
-        /* Стили для элемента игрока с кнопкой Кика */
         .player-item { background: #222; border: 2px solid #444; margin: 5px 0; padding: 10px; border-radius: 8px; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center; }
         .kick-btn { background: var(--red); color: white; border: 2px solid #000; border-radius: 5px; cursor: pointer; padding: 2px 8px; font-family: inherit; font-size: 1rem; transition: 0.2s; }
         .kick-btn:hover { background: #d32f2f; transform: scale(1.1); }
@@ -91,7 +89,6 @@
                             <h2 id="role-title" class="role-title">РОЛЬ 👀</h2>
                             <div id="brawler-name" class="brawler-name">??? 🃏</div>
                             <p style="font-size: 1.1rem; margin-top: 10px;">Обсуждайте и найдите шпиона! 💬👀</p>
-                            <button onclick="Game.hideRoleLocally()" class="btn red">СКРЫТЬ РОЛЬ 🙈</button>
                         </div>
                     </div>
                 </div>
@@ -108,7 +105,6 @@
     </div>
 
 <script>
-// --- Анимация частиц (Антигравитация) 🌈✨ ---
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
@@ -174,8 +170,6 @@ function animateParticles() {
 }
 resizeCanvas(); animateParticles();
 
-// --- Игровая логика P2P ---
-// Значительно расширен список бравлеров 🦸‍♂️
 const BRAWLERS = [
     "LEON 🦎", "SPIKE 🌵", "CROW 🦅", "MORTIS 🦇", "SHELLY 🔫", "COLT 🤠", 
     "EL PRIMO 💪", "EDGAR 🧣", "SURGE 🤖", "AMBER 🔥", "GALE ❄️", "COLETTE 📘", 
@@ -193,7 +187,6 @@ const Game = {
     createRoom() {
         this.myNick = document.getElementById('nick-input').value.trim().toUpperCase() || "HOST 💻";
         this.isHost = true;
-        // Генерация случайного уникального кода каждый раз
         const roomId = Math.floor(1000 + Math.random() * 9000).toString(); 
         
         this.peer = new Peer('brawl-' + roomId);
@@ -208,7 +201,6 @@ const Game = {
         this.peer.on('connection', (conn) => {
             conn.on('data', (data) => {
                 if (data.type === 'JOIN') {
-                    // Убедимся, что ники не дублируются точь-в-точь (добавляем цифру если что)
                     let finalNick = data.nick;
                     if (this.players.find(p => p.nick === finalNick)) {
                         finalNick += Math.floor(Math.random() * 100);
@@ -247,8 +239,6 @@ const Game = {
                 }
                 if (data.type === 'ROLE') this.displayRole(data.role, data.brawler);
                 if (data.type === 'RESET') document.getElementById('game-reveal').classList.add('hidden');
-                
-                // Обработка кика от хоста 🥾
                 if (data.type === 'KICK') {
                     this.showKickedScreen();
                 }
@@ -296,22 +286,18 @@ const Game = {
         document.getElementById('start-btn').classList.remove('hidden');
     },
 
-    // Функция изгнания игрока (работает только у хоста) 🥾
     kickPlayer(nick) {
         if (!this.isHost) return;
         
         const playerIndex = this.players.findIndex(p => p.nick === nick);
-        if (playerIndex > 0) { // Не позволяем хосту кикнуть самого себя (индекс 0)
+        if (playerIndex > 0) {
             const playerToKick = this.players[playerIndex];
             
-            // Отправляем сигнал о кике
             if (playerToKick.conn) {
                 playerToKick.conn.send({ type: 'KICK' });
-                // Даем миллисекунды на отправку сообщения перед закрытием канала
                 setTimeout(() => playerToKick.conn.close(), 200);
             }
             
-            // Удаляем из локального массива и обновляем всем списки
             this.players.splice(playerIndex, 1);
             this.broadcastList();
         }
@@ -332,14 +318,9 @@ const Game = {
         }
     },
 
-    hideRoleLocally() {
-        document.getElementById('game-reveal').classList.add('hidden');
-    },
-
     updateUI() {
         const list = document.getElementById('player-list');
         list.innerHTML = this.players.map((p, index) => {
-            // Кнопка кика появляется только если ты хост и это не твой собственный ник (ты всегда под индексом 0)
             const kickHtml = (this.isHost && index !== 0) 
                 ? `<button class="kick-btn" onclick="Game.kickPlayer('${p.nick}')">X</button>` 
                 : '';
@@ -361,7 +342,7 @@ const Game = {
     showKickedScreen() {
         document.getElementById('lobby-screen').classList.add('hidden');
         document.getElementById('kicked-screen').classList.remove('hidden');
-        if (this.peer) this.peer.destroy(); // Отключаемся от P2P сети
+        if (this.peer) this.peer.destroy(); 
     }
 };
 </script>
